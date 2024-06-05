@@ -1,7 +1,7 @@
 from flask import render_template, request, jsonify
 from . import main
-
-
+# gggg errors.py为主蓝本中的错误处理程序
+# 蓝本中错误处理如果使用errorhandler装饰器,只有蓝本中错误才能触发, 要想注册应用全局错误处理,使用app_errorhandler装饰器
 @main.app_errorhandler(403)
 def forbidden(e):
     if request.accept_mimetypes.accept_json and \

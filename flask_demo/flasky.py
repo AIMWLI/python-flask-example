@@ -1,4 +1,5 @@
 import os
+
 from dotenv import load_dotenv
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
@@ -14,13 +15,23 @@ if os.environ.get('FLASK_COVERAGE'):
 import sys
 import click
 from flask_migrate import Migrate, upgrade
-from app import create_app, db
-from app.models import User, Follow, Role, Permission, Post, Comment
+from flask_demo.app import create_app, db
+from flask_demo.app.models import User, Follow, Role, Permission, Post, Comment
 
+# jjjj 主脚本 创建应用实例, 此处若没配置环境变量, 使用default默认配置,然后初始化Flask-Migrate和Python shell定义的上下文
+# 提前修改.env中环境变量,如下,linux/manOS也可以使用export, window使用set xx=xxx
+"""
+FLASK_APP=flasky.app
+FLASK_CONFIG=heroku
+MAIL_USERNAME=jin17.song@gmail.com
+MAIL_PASSWORD=iampasswd
+export FLASK_APP=flasky.py &&  export FLASK_DEBUG=1 &&  flask run  
+"""
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 migrate = Migrate(app, db)
 
 
+# 装饰器惯常用法;把函数注册为事件处理程序,在特定事件发生时调用
 @app.shell_context_processor
 def make_shell_context():
     return dict(db=db, User=User, Follow=Follow, Role=Role,
@@ -32,7 +43,10 @@ def make_shell_context():
               help='Run tests under code coverage.')
 @click.argument('test_names', nargs=-1)
 def test(coverage, test_names):
-    """Run the unit tests."""
+    """Run the unit tests.
+    llll 启动单元测试命令
+    :rtype: object
+    """
     if coverage and not os.environ.get('FLASK_COVERAGE'):
         import subprocess
         os.environ['FLASK_COVERAGE'] = '1'

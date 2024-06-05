@@ -59,7 +59,7 @@ def server_shutdown():
     shutdown()
     return 'Shutting down...'
 
-
+# hhhh 第一:蓝本中视图与app_errorhandler一样, 路由装饰器由蓝本提供,因此使用@main.route而非@app.route
 @main.route('/', methods=['GET', 'POST'])
 def index():
     form = PostForm()

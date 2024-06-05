@@ -14,6 +14,7 @@ USER flasky
 WORKDIR /home/flasky
 
 COPY requirements requirements
+# 如果没有venv: sudo apt-get install python3-venv
 RUN python -m venv venv
 RUN venv/bin/pip install --no-cache-dir -r requirements/docker.txt
 

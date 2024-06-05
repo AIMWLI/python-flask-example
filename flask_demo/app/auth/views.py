@@ -23,6 +23,7 @@ def before_request():
 @auth.route('/unconfirmed')
 def unconfirmed():
     if current_user.is_anonymous or current_user.confirmed:
+        # iiii 第二:url_for()第一个参数在单脚本应用中为视图函数的名字, 在蓝本中需要加端点名,ex: main.index
         return redirect(url_for('main.index'))
     return render_template('auth/unconfirmed.html')
 
